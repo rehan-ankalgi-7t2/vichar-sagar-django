@@ -1,0 +1,32 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        {% block title %}Vichar Sagar {% endblock %}
+    </title> 
+    <link rel='stylesheet' href='{% static 'style.css'%}' />
+    {%tailwind_css%}
+  </head>
+  <body>
+    <nav class='p-5 flex items-center justify-between shadow-md'>
+            <h1 class='text-2xl'>🌊 Vichar Sagar</h1>
+            <ul class='flex items-center gap-5'>
+                <li><a href="/chai">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/contact">Write</a></li>
+                <li><a href="/contact">Notifications</a></li>
+                <li><a href="/contact">Profile</a></li>
+            </ul>
+    </nav>
+    {% block content %}{% endblock %}
+    <footer class='bg-black text-white flex items-center justify-center flex-col p-5'>
+        <h2>Made with vibe by Reho.</h2>
+        &copy reho dev
+    </footer>
+  </body>
+</html>
