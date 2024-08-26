@@ -12,6 +12,14 @@ class Article(models.Model):
 
     def __str__(self):
         return self.articleTitle
+    
+    @property
+    def likes_count(self):
+        return self.likes.count()
+    
+    @property
+    def comments_count(self):
+        return self.comments.count()
 
 class Comment(models.Model):
     article = models.ForeignKey(Article, related_name='related_article', on_delete=models.CASCADE)

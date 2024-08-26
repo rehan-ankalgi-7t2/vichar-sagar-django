@@ -1,10 +1,16 @@
 from django.shortcuts import render
-from .models import Article
+from .models import Article, Topic
 
 # Create your views here.
 def home_view(request):
     all_articles = Article.objects.all()
-    return render(request, "vicharsagar/home.html", {'articles': all_articles})
+    topics = Topic.objects.all()[:10]
+
+    context = {
+        "articles": all_articles,
+        "topics": topics
+    }
+    return render(request, "vicharsagar/home.html", context)
 
 def profile_view(request):
     return render(request, "vicharsagar/profile.html")
