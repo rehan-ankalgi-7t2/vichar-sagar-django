@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponseRedirect
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
@@ -24,4 +26,4 @@ urlpatterns = [
     # path("", views.hello, name="hello"),
     path('', lambda request: HttpResponseRedirect('/vicharsagar/')),  # Redirect root to /vicharsagar/
     path("vicharsagar/", include("vicharsagar.urls"))
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # important for images to show up

@@ -9,9 +9,14 @@
                         {% for article in articles %}
                             <div class="flex w-full justify-between items-center p-5 border-b-2" id="article-card">
                                 <div>
-                                    <span>{{article.author.name}}</span>
+                                    <span>{{article.author}}</span>
                                     <h3 class="text-3xl mb-2">{{article.articleTitle}}</h3>
                                     <p class="text-ellipsis overflow-hidden h-7 w-[90%]">{{article.content}}</p>
+                                    <div class="flex flex-wrap gap-2 my-2">
+                                        {% for at_topic in article.topics.all %}
+                                            <span class="bg-gray-300 text-black py-2 px-3 rounded-full text-sm">{{at_topic.topicName}}</span>
+                                        {% endfor %}
+                                    </div>
                                     <div class="flex w-full items-center gap-5">
                                         <span>{{article.publishedDate}}</span>
                                         <span>
@@ -20,8 +25,7 @@
                                         <span>💬 {{article.comments_count}}</span>
                                     </div>
                                 </div>
-                                {% comment %} <img class="aspect-2 w=[180px] h-[160px] bg-cover rounded-md"  src="{{article.articleImage.url}} alt="{{article.articleTitle}}/> {% endcomment %}
-                                <img src="{{article.articleImage.url}}" alt="{{article.articleTitle}}" class='w-full bg-contain rounded-md'>
+                                <img src="{{article.articleImage.url}}" alt="{{article.articleTitle}}" class="w-full bg-cover rounded-md h-[140px] origin-center" />
                             </div>
                         {% endfor %}
                     </div>
@@ -29,7 +33,16 @@
             </div>
             <div class="md:w-1/4">
                 <aside>
-                    <div>Staff picked articles go here...</div>
+                    <div>
+                        <h3 class="text-xl">Staff picked articles</h3>
+                        {% for article in articles %}
+                            <div class="mb-3">
+                                <span>{{article.author}}</span>
+                                <h4 class="text-md font-semibold">{{article.articleTitle}}</h4>
+                            </div>
+                        {% endfor %}
+                    </div>
+
                     <hr>
                     <div class="py-5">
                         <h3 class="text-xl">Topics to follow</h3>
@@ -44,20 +57,17 @@
                         </div>
                     </div>
                     <hr>
-                    <div>Other Writers to follow...</div>
+                    <div>
+                        <h3 class="text-xl">Writers to Follow</h3>
+                        {% for user in users %}
+                            <div class="w-full flex items-center justify-between mt-2">
+                                <p class="font-semibold">{{user}}</p>
+                                <button class="py-1 px-3 border-2 rounded-full shadow-sm">follow</button>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </aside>
             </div>
         </div>
     </div>
-    {% comment %} <div>
-
-        <main>Article listing goes here...</main>
-        <aside>
-            <div>Staff picked articles go here...</div>
-            <hr>
-            <div>Topics to follow go here...</div>
-            <hr>
-            <div>Other Writers to follow...</div>
-        </aside>
-    </div> {% endcomment %}
 {% endblock content %}

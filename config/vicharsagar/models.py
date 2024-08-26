@@ -5,10 +5,11 @@ class Article(models.Model):
     articleTitle = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     publishedDate = models.DateField(auto_now_add=True)  # Set on creation
-    articleImage = models.ImageField(upload_to='articles/')
+    articleImage = models.ImageField(upload_to='articles/', blank=True, null=True)
     content = models.TextField()
     likes = models.ManyToManyField(User, related_name='liked_articles', blank=True)
     comments = models.ManyToManyField('Comment', related_name='articles', blank=True)
+    topics = models.ManyToManyField('Topic', related_name='related_topics', blank=True)
 
     def __str__(self):
         return self.articleTitle
