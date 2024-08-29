@@ -118,4 +118,18 @@ def notifications_view(request):
     return render(request, "vicharsagar/about.html",)
 
 def profile_view(request):
-    return render(request, "vicharsagar/profile.html")
+    if request.user.is_authenticated:
+        # the user is logged in
+        user = request.user
+
+        user_articles = Article.objects.filter(user = user)
+
+        context = {
+            "user": user,
+        }
+    else:
+        # user not logged in
+        context = {
+            "message": "you are not logged in."
+        }
+    return render(request, "vicharsagar/profile.html", context)
