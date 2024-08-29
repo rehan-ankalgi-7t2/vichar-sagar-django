@@ -121,12 +121,16 @@ def profile_view(request):
     if request.user.is_authenticated:
         # the user is logged in
         user = request.user
-
-        user_articles = Article.objects.filter(user = user)
-
-        context = {
-            "user": user,
-        }
+        user_articles = Article.objects.filter(author = user)
+        if(len(user_articles) > 0):
+            context = {
+                "user": user,
+                "user_articles": user_articles
+            }
+        else:
+            context = {
+                "user": user
+            }
     else:
         # user not logged in
         context = {
