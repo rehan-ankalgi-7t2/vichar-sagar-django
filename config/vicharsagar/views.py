@@ -20,3 +20,9 @@ def profile_view(request):
 
 def list_view(request):
     return render(request, "vicharsagar/lists.html")
+
+def login(request):
+    return render(request, "vicharsagar/login.html")
+
+def register(request):
+    return render(request, "vicharsagar/register.html")
