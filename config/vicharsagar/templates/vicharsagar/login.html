@@ -11,14 +11,15 @@
             {% endif %}
         </div>
         <form method="POST" class="shadow-lg p-5 flex flex-col items-start gap-5">
+            {% csrf_token %}
             <h1 class="text-4xl">Login with your details</h1>
             <div class="w-full">
-                <label for="username" class="block">Username / Email</label>
+                <label for="username" class="block">Username</label>
                 <input type="text" name="username" id="username" class="min-w-full block border border-black focus:border-blue-600 focus:border-2 rounded-md">
             </div>
             <div class="w-full">
                 <label for="password" class="block">Password</label>
-                <input type="text" name="password" id="password" class="min-w-full block border border-black focus:border-blue-600 focus:border-2 rounded-md">
+                <input type="password" name="password" id="password" class="min-w-full block border border-black focus:border-blue-600 focus:border-2 rounded-md">
             </div>
             <input type="submit" value="login" class="py-2 px-5 bg-blue-600 text-white font-semibold rounded-md">
             <p>Don't have an account? <a href="/vicharsagar/register/" class="font-medium text-blue-600">Register</a></p>
