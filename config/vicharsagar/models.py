@@ -68,6 +68,10 @@ class Profile(models.Model):
     @property
     def profile_field_counts(self):
         total_counts = {
-            "followers_count": self.followers.count()
+            "followers_count": self.followers.count(),
+            "following_count": self.following.count(),
+            "articles_count": self.articles.count(),
+            "lists_count": self.lists.count(),
+            "topics_count": self.topics.count()
         }
         return total_counts

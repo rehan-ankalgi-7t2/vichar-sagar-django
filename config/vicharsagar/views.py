@@ -3,7 +3,7 @@ import re
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
-from .models import Article, Topic
+from .models import Article, Topic, Profile
 
 # Create your views here.
 def home_view(request):
@@ -121,15 +121,16 @@ def profile_view(request):
     if request.user.is_authenticated:
         # the user is logged in
         user = request.user
-        user_articles = Article.objects.filter(author = user)
-        if(len(user_articles) > 0):
+        existing_profile = Profile.objects.filter(user = user)
+
+        if existing_profile.exists():
             context = {
-                "user": user,
-                "user_articles": user_articles
+                "profile_data": existing_profile
             }
         else:
             context = {
-                "user": user
+                "message": "your profile is not complete",
+                "user_data": user
             }
     else:
         # user not logged in
@@ -137,3 +138,6 @@ def profile_view(request):
             "message": "you are not logged in."
         }
     return render(request, "vicharsagar/profile.html", context)
+
+def edit_profile_view(request):
+    return render(request, "vicharsagar/edit_profile.html")

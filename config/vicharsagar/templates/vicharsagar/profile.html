@@ -5,6 +5,7 @@
         <div class="md:w-3/4">
             {% if user.is_authenticated %}
                 <h1 class="text-4xl">Hello {{user.username}}</h1>
+                <button class="py-2 px-5 bg-blue-600 text-white rounded-md"><a href="/edit-profile">Edit Profile</a></button>
             {% else %}
                 <span class="p-4 rounded-md bg-red-100 text-red-700">❌ {{message}}</span>
             {% endif %}
@@ -22,8 +23,8 @@
         <div class="md:w-1/4">
             <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-full w-[100px] h-[100px]"></div>
             <h3>{{user.username}}</h3>
-            <span>followers {{user.followers}}</span>
-            <span>following {{user.following}}</span>
+            <span>followers</span>
+            <span>following</span>
 
         </div>
     </div>

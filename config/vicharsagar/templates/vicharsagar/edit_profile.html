@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %}Edit Profile - Vichar Sagar{% endblock title %}
+{% block content %}
+    <div class="container mx-auto px-4 py-5 min-h-screen">
+        <div class="flex flex-col gap-2 mb-2">
+            {% if success_message %}
+                <span class="p-4 rounded-md bg-green-100 text-green-700">✅ {{success_message}}</span>
+            {% endif %}
+            {% if error_message %}
+                <span class="p-4 rounded-md bg-red-100 text-red-700">❌ {{error_message}}</span>
+            {% endif %}
+        </div>
+        <form method="POST" class="shadow-lg p-5 flex flex-col items-start gap-5">
+            {% csrf_token %}
+            <h1 class="text-4xl">Edit Profile</h1>
+            <div class="w-full">
+                <label for="username" class="block">Username</label>
+                <input type="text" name="username" id="username" class="min-w-full block border border-black focus:border-blue-600 focus:border-2 rounded-md">
+            </div>
+            <div class="w-full">
+                <label for="password" class="block">Password</label>
+                <input type="password" name="password" id="password" class="min-w-full block border border-black focus:border-blue-600 focus:border-2 rounded-md">
+            </div>
+            <input type="submit" value="Save Changes" class="py-2 px-5 bg-blue-600 text-white font-semibold rounded-md">
+        </form>
+    </div>
+{% endblock content %}
