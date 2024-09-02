@@ -77,6 +77,11 @@ def register(request):
             )
             new_user.save()
 
+            # create a new profile and attach new user to it
+            new_profile = Profile.objects.create(
+                user = new_user
+            )
+
             context = {
                 "success_message": "Registration successfull! Please log in."
             }
