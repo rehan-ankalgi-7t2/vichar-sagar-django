@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 import re
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from .models import Article, Topic, Profile
+from .forms import ProfileForm
 
 # Create your views here.
 def home_view(request):
@@ -145,4 +147,27 @@ def profile_view(request):
     return render(request, "vicharsagar/profile.html", context)
 
 def edit_profile_view(request):
-    return render(request, "vicharsagar/edit_profile.html")
+    try:
+        current_profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        current_profile = None
+
+    if request.method == 'POST':
+        if current_profile:
+            form = ProfileForm(request.POST, instance=current_profile)
+        else:
+            form = ProfileForm(request.POST)
+
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = request.user  # Associate the profile with the current logged-in user
+            profile.save()
+            messages.success(request, 'Your profile was successfully updated!')
+            return redirect('profile')
+    else:
+        if current_profile:
+            form = ProfileForm(instance=current_profile)
+        else:
+            form = ProfileForm()
+
+    return render(request, "vicharsagar/edit_profile.html", {'form': form})

@@ -5,7 +5,7 @@
         <div class="md:w-3/4">
             {% if user.is_authenticated %}
                 <h1 class="text-4xl">Hello {{user.username}}</h1>
-                <button class="py-2 px-5 bg-blue-600 text-white rounded-md"><a href="/edit-profile">Edit Profile</a></button>
+                <button class="py-2 px-5 bg-blue-600 text-white rounded-md"><a href="/vicharsagar/profile/edit">Edit Profile</a></button>
             {% else %}
                 <span class="p-4 rounded-md bg-red-100 text-red-700">❌ {{message}}</span>
             {% endif %}

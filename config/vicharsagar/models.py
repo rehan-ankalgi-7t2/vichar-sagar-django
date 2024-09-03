@@ -49,6 +49,7 @@ class Topic(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     pfp = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)  # Profile picture
+    bio = models.TextField(max_length=300, null=True, blank=True)
     push_notification = models.BooleanField(default=True)  # Enabled by default
     email_notification = models.BooleanField(default=True)  # Enabled by default
     theme = models.CharField(max_length=50, blank=True, null=True)  # User interface theme preference
