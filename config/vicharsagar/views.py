@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from .models import Article, Topic, Profile
-from .forms import ProfileForm
+from .forms import ProfileForm, ArticleForm
 
 # Create your views here.
 def home_view(request):
@@ -171,3 +171,18 @@ def edit_profile_view(request):
             form = ProfileForm()
 
     return render(request, "vicharsagar/edit_profile.html", {'form': form})
+
+def create_article_view(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+
+        if form.is_valid():
+            new_article = form.save(commit=False)
+            new_article.author = request.user
+            new_article.save()
+            messages.success(request, 'Your article  was successfully published!')
+            return redirect('home')
+    else:
+        form = ArticleForm()
+
+    return render(request, "vicharsagar/create_article.html", {'form': form})

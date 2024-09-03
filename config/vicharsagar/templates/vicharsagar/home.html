@@ -25,7 +25,9 @@
                                         <span>💬 {{article.comments_count}}</span>
                                     </div>
                                 </div>
-                                <img src="{{article.articleImage.url}}" alt="{{article.articleTitle}}" class="w-full bg-cover rounded-md h-[140px] origin-center" />
+                                {% if article.articleImage %}
+                                    <img src="{{article.articleImage.url}}" alt="{{article.articleTitle}}" class="w-full bg-cover rounded-md h-[140px] origin-center" />
+                                {% endif %}
                             </div>
                         {% endfor %}
                     </div>
