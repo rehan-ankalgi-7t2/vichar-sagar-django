@@ -2,43 +2,52 @@
 {% block title %} - Vichar Sagar{% endblock title %}
 {% block content %}
     <div class="container mx-auto px-4 py-5 min-h-screen shadow-md my-5">
-        {% if article_data %}
-            <article>
-                <h1 class="text-5xl">{{article_data.articleTitle}}</h1>
-                <br>
-                {% if article_data.articleImage %}
-                    <img src={{article_data.articleImage.url}} alt={{article_data.articleTitle}} class="w-full bg-contain bg-center">
+        <div class="flex flex-col md:flex-row gap-4">
+            <div class="md:w-4/5 border-r-2 pr-4">
+                {% if article_data %}
+                    <article>
+                        <h1 class="text-5xl">{{article_data.articleTitle}}</h1>
+                        <br>
+                        {% if article_data.articleImage %}
+                            <img src={{article_data.articleImage.url}} alt={{article_data.articleTitle}} class="w-full bg-contain bg-center rounded-md">
+                        {% endif %}
+                        <br>
+                        <p>{{article_data.content}}</p>
+                    </article>
                 {% endif %}
                 <br>
-                <p>{{article_data.content}}</p>
-            </article>
-        {% endif %}
-        <br>
-        <hr>
-        <br>
-        {% if author_data %}
-            <h2>About Author</h2>
-            <h3>{{author_data.username}}</h3>
-            {% if isUserAuthor %}
-            {% else %}
-            <button>follow</button>
-            {% endif %}
-        {% endif %}
-        <br>
-        <hr>
-        <br>
-        <h2>Manage Article Post</h2>
-        <div class="bg-red-50">
-            <div>
-                <p>Archive Article Post</p>
-                <button class="py-2 px-3 bg-gray-600 shadow-md rounded-md font-semibold text-white">Archive 🗃️</button>
+                <hr>
+                <br>
+                {% if isUserAuthor %}
+                    <div>
+                        <h2 class="text-3xl">Manage Article Post</h2>
+                        <div class="bg-red-50 p-4 flex flex-col items-stretch mt-2">
+                            <div class="w-full flex items-center justify-between border-b-2 py-2">
+                                <p>Archive Article Post</p>
+                                <button class="py-2 px-3 bg-gray-600 shadow-md rounded-md font-semibold text-white">Archive 🗃️</button>
+                            </div>
+                            <div class="w-full flex items-center justify-between border-b-2 py-2">
+                                <p>Delete Post</p>
+                                <a href="/vicharsagar/article/delete/{{article_data.id}}">
+                                    <button class="py-2 px-3 bg-red-600 shadow-md rounded-md font-semibold text-white">Delete 🗑️</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                {% endif %}
             </div>
-            <div>
-                <p>Delete Post</p>
-                <a href="/vicharsagar/article/delete/{{article_data.id}}">
-                    <button class="py-2 px-3 bg-red-600 shadow-md rounded-md font-semibold text-white">Delete 🗑️</button>
-                </a>
+            <div class="md:w-1/5">
+                {% if author_data %}
+                    <h2>About Author</h2>
+                    <h3>{{author_data.username}}</h3>
+                    {% if isUserAuthor %}
+                    {% else %}
+                    <button>follow</button>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
+        
     </div>
 {% endblock content %}

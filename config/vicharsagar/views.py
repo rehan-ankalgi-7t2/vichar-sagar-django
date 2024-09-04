@@ -154,9 +154,9 @@ def edit_profile_view(request):
 
     if request.method == 'POST':
         if current_profile:
-            form = ProfileForm(request.POST, instance=current_profile)
+            form = ProfileForm(request.POST, request.FILES, instance=current_profile)
         else:
-            form = ProfileForm(request.POST)
+            form = ProfileForm(request.POST, request.FILES)
 
         if form.is_valid():
             profile = form.save(commit=False)
