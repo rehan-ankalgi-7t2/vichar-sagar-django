@@ -29,4 +29,5 @@ urlpatterns = [
     path("profile/edit", views.edit_profile_view, name="edit-profile"),
     path("article/create", views.create_article_view, name="create-article"),
     path("article/<int:article_id>", views.article_details_view, name="view-article"),
+    path("article/delete/<int:article_id>", views.delete_article, name="delete-article"),
 ]

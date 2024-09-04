@@ -204,3 +204,8 @@ def article_details_view(request, article_id):
     print(context)
 
     return render(request, "vicharsagar/view_article.html", context)
+
+def delete_article(request, article_id):
+    curr_article = Article.objects.get(id=article_id)
+    curr_article.delete()
+    return redirect('home')
