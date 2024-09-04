@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %} - Vichar Sagar{% endblock title %}
+{% block content %}
+    <div class="container mx-auto px-4 py-5 min-h-screen shadow-md my-5">
+        {% if article_data %}
+            <article>
+                <h1 class="text-5xl">{{article_data.articleTitle}}</h1>
+                <br>
+                {% if article_data.articleImage %}
+                    <img src={{article_data.articleImage.url}} alt={{article_data.articleTitle}} class="w-full bg-contain bg-center">
+                {% endif %}
+                <br>
+                <p>{{article_data.content}}</p>
+            </article>
+        {% endif %}
+        <br>
+        <hr>
+        <br>
+        {% if author_data %}
+            <h2>About Author</h2>
+            <h3>{{author_data.username}}</h3>
+            {% if isUserAuthor %}
+            {% else %}
+            <button>follow</button>
+            {% endif %}
+        {% endif %}
+        <br>
+        <hr>
+        <br>
+        <h2>Manage Article Post</h2>
+        <div class="bg-red-50">
+            <div>
+                <p>Archive Article Post</p>
+                <button class="py-2 px-3 bg-gray-600 shadow-md rounded-md font-semibold text-white">Archive 🗃️</button>
+            </div>
+            <div>
+                <p>Delete Post</p>
+                <button class="py-2 px-3 bg-red-600 shadow-md rounded-md font-semibold text-white">Delete 🗑️</button>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -4,13 +4,15 @@
     <div class="container mx-auto px-4 py-5 min-h-screen">
         <div class="flex flex-col md:flex-row gap-4">
             <div class="md:w-3/4 border-r-2">
-                <main>
+                <main class="overflow-y-scroll">
                     <div class="flex-col flex gap-5">
                         {% for article in articles %}
                             <div class="flex w-full justify-between items-center p-5 border-b-2" id="article-card">
                                 <div>
                                     <span>{{article.author}}</span>
-                                    <h3 class="text-3xl mb-2">{{article.articleTitle}}</h3>
+                                    <a href="/vicharsagar/article/{{article.id}}">
+                                        <h3 class="text-3xl mb-2">{{article.articleTitle}}</h3>
+                                    </a> 
                                     <p class="text-ellipsis overflow-hidden h-7 w-[90%]">{{article.content}}</p>
                                     <div class="flex flex-wrap gap-2 my-2">
                                         {% for at_topic in article.topics.all %}
@@ -26,7 +28,7 @@
                                     </div>
                                 </div>
                                 {% if article.articleImage %}
-                                    <img src="{{article.articleImage.url}}" alt="{{article.articleTitle}}" class="w-full bg-cover rounded-md h-[140px] origin-center" />
+                                    <img src="{{article.articleImage.url}}" alt="{{article.articleTitle}}" class="bg-cover rounded-md h-[140px] origin-center" />
                                 {% endif %}
                             </div>
                         {% endfor %}

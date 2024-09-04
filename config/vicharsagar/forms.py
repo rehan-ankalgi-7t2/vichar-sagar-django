@@ -14,9 +14,10 @@ class ProfileForm(forms.ModelForm):
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ['articleTitle', 'content', 'topics']
+        fields = ['articleTitle', 'content', 'topics', 'articleImage']
         widgets={
             'articleTitle': forms.TextInput(attrs={'class': 'border-2 focus:border-4 focus:border-blue-500 rounded-md block w-[100%]'}),
             'content': forms.Textarea(attrs={'class': 'w-[100%] block rounded-md', 'rows': 5, 'cols': 100, 'placeholder': 'Write your bio here...'}),
-            'topics': forms.CheckboxSelectMultiple(attrs={'class': 'border-2 focus:border-4 focus:border-blue-500 rounded-md'})
+            'topics': forms.CheckboxSelectMultiple(attrs={'class': 'border-2 focus:border-4 focus:border-blue-500 rounded-md'}),
+            'articleImage': forms.ClearableFileInput(attrs={'class': 'block'})
         }

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import re
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -174,7 +174,7 @@ def edit_profile_view(request):
 
 def create_article_view(request):
     if request.method == 'POST':
-        form = ArticleForm(request.POST)
+        form = ArticleForm(request.POST, request.FILES)
 
         if form.is_valid():
             new_article = form.save(commit=False)
@@ -186,3 +186,21 @@ def create_article_view(request):
         form = ArticleForm()
 
     return render(request, "vicharsagar/create_article.html", {'form': form})
+
+def article_details_view(request, article_id):
+    isUserAuthor = False
+    curr_article = get_object_or_404(Article, pk=article_id)
+    article_author = get_object_or_404(User, pk=curr_article.author.id)
+    
+    if request.user == article_author:
+        isUserAuthor = True
+
+    context = {
+        "article_data": curr_article,
+        "author_data": article_author,
+        "isUserAuthor": isUserAuthor
+    }
+
+    print(context)
+
+    return render(request, "vicharsagar/view_article.html", context)
