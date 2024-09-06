@@ -21,10 +21,11 @@
                                     </div>
                                     <div class="flex w-full items-center gap-5">
                                         <span>{{article.publishedDate}}</span>
-                                        <span>
-                                            👏 {{article.likes_count}}
-                                        </span>
-                                        <span>💬 {{article.comments_count}}</span>
+                                        <button>
+                                            <i class="bi bi-heart text-red-500"></i>
+                                            {{article.likes_count}}
+                                        </button>
+                                        <button><i class="bi bi-chat"></i> {{article.comments_count}}</button>
                                     </div>
                                 </div>
                                 {% if article.articleImage %}

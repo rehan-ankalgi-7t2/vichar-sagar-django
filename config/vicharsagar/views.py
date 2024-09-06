@@ -132,6 +132,7 @@ def profile_view(request):
 
         if existing_profile.exists():
             context = {
+                "user_data": user,
                 "profile_data": existing_profile
             }
         else:
