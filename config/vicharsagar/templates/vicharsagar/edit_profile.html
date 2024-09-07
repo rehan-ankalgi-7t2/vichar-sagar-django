@@ -10,10 +10,10 @@
                 <span class="p-4 rounded-md bg-red-100 text-red-700">❌ {{error_message}}</span>
             {% endif %}
         </div>
-        <form method="POST" class="shadow-lg p-5 flex flex-col items-start gap-5">
+        <form method="POST" class="shadow-lg p-5 flex flex-col items-start gap-5" enctype="multipart/form-data>
             <h1 class="text-3xl">Edit Profile</h1>
             {% csrf_token %}
-            {{form.as_p}}
+            {{form.as_div}}
             <button type="submit" class="py-2 px-5 bg-blue-600 text-white rounded-md">Save Changes</button>
         </form>
     </div>

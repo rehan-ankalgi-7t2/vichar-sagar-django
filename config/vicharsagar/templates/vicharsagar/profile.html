@@ -5,16 +5,42 @@
         <div class="flex flex-col md:flex-row gap-4">
             <div class="md:w-3/4">
                 {% if user.is_authenticated %}
-                    <h1 class="text-4xl">Hello {{user.username}}</h1>
-                    <button class="py-2 px-5 bg-blue-600 text-white rounded-md"><a href="/vicharsagar/profile/edit">Edit Profile</a></button>
+                <div class="w-full flex items-center justify-between py-3">
+                    <h1 class="text-5xl">Hello {{user.username}}</h1>
+                    <button class="py-2 px-5 bg-blue-500 text-white rounded-md shadow-md"><a href="/vicharsagar/profile/edit">Edit Profile <i class="bi bi-pencil"></i> </a></button>
+                </div>
                 {% else %}
                     <span class="p-4 rounded-md bg-red-100 text-red-700">❌ {{message}}</span>
                 {% endif %}
                 <hr>
                 {% if user_articles %}
+                <h2 class="text-2xl pt-3">Your Articles</h2>
                     {% for article in user_articles %}
-                        <p>{{article.title}}</p>
-                    {% endfor %}
+                            <div class="flex w-full justify-between items-center p-5 border-b-2" id="article-card">
+                                <div>
+                                    <a href="/vicharsagar/article/{{article.id}}">
+                                        <h3 class="text-3xl mb-2">{{article.articleTitle}}</h3>
+                                    </a> 
+                                    <p class="text-ellipsis overflow-hidden h-7 w-[90%]">{{article.content}}</p>
+                                    <div class="flex flex-wrap gap-2 my-2">
+                                        {% for at_topic in article.topics.all %}
+                                            <span class="bg-gray-300 text-black py-2 px-3 rounded-full text-sm">{{at_topic.topicName}}</span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="flex w-full items-center gap-5">
+                                        <span>{{article.publishedDate}}</span>
+                                        <button>
+                                            <i class="bi bi-heart text-red-500"></i>
+                                            {{article.likes_count}}
+                                        </button>
+                                        <button><i class="bi bi-chat"></i> {{article.comments_count}}</button>
+                                    </div>
+                                </div>
+                                {% if article.articleImage %}
+                                    <img src="{{article.articleImage.url}}" alt="{{article.articleTitle}}" class="object-cover rounded-md h-[140px] w-[240px] origin-center" />
+                                {% endif %}
+                            </div>
+                        {% endfor %}
                     {% else %}
                         <h2 class="text-2xl">No articles are authored by you!</h2>
                         <p>write your first article and join the tortured poet's department</p>
@@ -24,7 +50,8 @@
             <div class="md:w-1/4">
                 {% if profile_data %}
                     {% comment %} <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-full w-[100px] h-[100px]"></div> {% endcomment %}
-                    <img src="{{profile_data.pfp.url}}" alt="pfp">
+                    {{profile_data.pfp.url}}
+                    <img src="{{profile_data.pfp.url}}" alt="pfp"/>
                 {% endif %}
                 <h3>{{user.username}}</h3>
                 <span>followers</span>

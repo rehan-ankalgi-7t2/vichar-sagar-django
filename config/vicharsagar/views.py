@@ -129,11 +129,13 @@ def profile_view(request):
         # the user is logged in
         user = request.user
         existing_profile = Profile.objects.filter(user = user)
+        authored_articles = Article.objects.filter(author = user)
 
         if existing_profile.exists():
             context = {
                 "user_data": user,
-                "profile_data": existing_profile
+                "profile_data": existing_profile,
+                "user_articles": authored_articles 
             }
         else:
             context = {
@@ -164,6 +166,7 @@ def edit_profile_view(request):
             profile.user = request.user  # Associate the profile with the current logged-in user
             profile.save()
             messages.success(request, 'Your profile was successfully updated!')
+            print(profile)
             return redirect('profile')
     else:
         if current_profile:

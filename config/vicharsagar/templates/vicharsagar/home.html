@@ -3,8 +3,8 @@
 {% block content %}
     <div class="container mx-auto px-4 py-5 min-h-screen">
         <div class="flex flex-col md:flex-row gap-4">
-            <div class="md:w-3/4 border-r-2">
-                <main class="overflow-y-scroll">
+            <div class="md:w-3/4 border-r-2 overflow-y-scroll">
+                <main class="">
                     <div class="flex-col flex gap-5">
                         {% for article in articles %}
                             <div class="flex w-full justify-between items-center p-5 border-b-2" id="article-card">
@@ -29,7 +29,7 @@
                                     </div>
                                 </div>
                                 {% if article.articleImage %}
-                                    <img src="{{article.articleImage.url}}" alt="{{article.articleTitle}}" class="bg-cover rounded-md h-[140px] origin-center" />
+                                    <img src="{{article.articleImage.url}}" alt="{{article.articleTitle}}" class="object-cover rounded-md h-[140px] origin-center" />
                                 {% endif %}
                             </div>
                         {% endfor %}
@@ -50,7 +50,7 @@
 
                     <hr>
                     <div class="py-5">
-                        <h3 class="text-xl">Topics to follow</h3>
+                        <h3 class="text-xl pb-3">Topics to follow</h3>
                         <div class="flex flex-wrap gap-2">
                             {% for topic in topics %}
                                 <span class="bg-gray-300 text-black py-2 px-3 rounded-full text-sm">{{topic.topicName}}</span>
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <hr>
-                    <div>
+                    <div class="py-5">
                         <h3 class="text-xl">Writers to Follow</h3>
                         {% for user in users %}
                             <div class="w-full flex items-center justify-between mt-2">
