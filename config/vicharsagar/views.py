@@ -127,20 +127,19 @@ def notifications_view(request):
 def profile_view(request):
     if request.user.is_authenticated:
         # the user is logged in
-        user = request.user
-        existing_profile = Profile.objects.filter(user = user)
-        authored_articles = Article.objects.filter(author = user)
+        existing_profile = get_object_or_404(Profile, user=request.user.id)
+        authored_articles = Article.objects.filter(author = request.user)
 
-        if existing_profile.exists():
+        if existing_profile:
             context = {
-                "user_data": user,
+                "user_data": request.user,
                 "profile_data": existing_profile,
                 "user_articles": authored_articles 
             }
         else:
             context = {
                 "message": "your profile is not complete",
-                "user_data": user
+                "user_data": request.user
             }
     else:
         # user not logged in
@@ -164,6 +163,11 @@ def edit_profile_view(request):
         if form.is_valid():
             profile = form.save(commit=False)
             profile.user = request.user  # Associate the profile with the current logged-in user
+
+            # Handle profile picture - retain the existing one if no new one is uploaded
+            if 'pfp' not in request.FILES and current_profile:
+                profile.pfp = current_profile.pfp
+
             profile.save()
             messages.success(request, 'Your profile was successfully updated!')
             print(profile)

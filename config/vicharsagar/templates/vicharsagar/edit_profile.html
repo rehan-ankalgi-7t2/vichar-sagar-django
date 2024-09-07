@@ -10,7 +10,7 @@
                 <span class="p-4 rounded-md bg-red-100 text-red-700">❌ {{error_message}}</span>
             {% endif %}
         </div>
-        <form method="POST" class="shadow-lg p-5 flex flex-col items-start gap-5" enctype="multipart/form-data>
+        <form method="POST" class="shadow-lg p-5 flex flex-col items-start gap-5" enctype="multipart/form-data">
             <h1 class="text-3xl">Edit Profile</h1>
             {% csrf_token %}
             {{form.as_div}}

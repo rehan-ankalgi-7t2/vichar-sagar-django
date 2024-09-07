@@ -48,10 +48,10 @@
                 {% endif %}
             </div>
             <div class="md:w-1/4">
-                {% if profile_data %}
-                    {% comment %} <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-full w-[100px] h-[100px]"></div> {% endcomment %}
-                    {{profile_data.pfp.url}}
-                    <img src="{{profile_data.pfp.url}}" alt="pfp"/>
+                {% if profile_data.pfp %}
+                <img src="{{profile_data.pfp.url}}" alt="pfp" class="w-[100px] h-[100px] object-cover"/>
+                {% else %}
+                <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-full w-[100px] h-[100px]"></div>
                 {% endif %}
                 <h3>{{user.username}}</h3>
                 <span>followers</span>
