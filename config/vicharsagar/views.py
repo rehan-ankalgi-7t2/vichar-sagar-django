@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
 import re
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
-from .models import Article, Topic, Profile
-from .forms import ProfileForm, ArticleForm
+from .models import Article, Topic, Profile, Comment
+from .forms import ProfileForm, ArticleForm, CommentForm
 
 # Create your views here.
 def home_view(request):
@@ -199,17 +199,37 @@ def article_details_view(request, article_id):
     isUserAuthor = False
     curr_article = get_object_or_404(Article, pk=article_id)
     article_author = get_object_or_404(User, pk=curr_article.author.id)
+    author_profile = get_object_or_404(Profile, user=article_author.id)
+    article_comments = Comment.objects.filter(article = article_id)
     
     if request.user == article_author:
         isUserAuthor = True
+    
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.user = request.user
+            new_comment.article = curr_article
+            new_comment.save()
+            messages.success(request, 'comment shared successfully')
+
+            # Redirect to the same article page to avoid form resubmission
+            return redirect('view-article', article_id=article_id)
+    else:
+        form = CommentForm()
 
     context = {
         "article_data": curr_article,
         "author_data": article_author,
-        "isUserAuthor": isUserAuthor
+        "author_profile": author_profile,
+        "comments": article_comments or [],
+        "isUserAuthor": isUserAuthor,
+        "comments_count": len(article_comments),
+        "form": form
     }
-
-    print(context)
 
     return render(request, "vicharsagar/view_article.html", context)
 

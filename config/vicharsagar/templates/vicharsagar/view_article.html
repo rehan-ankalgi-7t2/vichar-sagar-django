@@ -18,9 +18,47 @@
                 <br>
                 <hr>
                 <br>
+                {% comment %} comments listing and form {% endcomment %}
+                <div class="flex flex-col gap-2 mb-2">
+                    {% if success_message %}
+                        <span class="p-4 rounded-md bg-green-100 text-green-700">✅ {{success_message}}</span>
+                    {% endif %}
+                    {% if error_message %}
+                        <span class="p-4 rounded-md bg-red-100 text-red-700">❌ {{error_message}}</span>
+                    {% endif %}
+                </div>
+                <h3 class="text-3xl">Comments {{comments_count}}</h3>
+                <form method="POST" class="shadow-md p-5 my-5 flex items-baseline justify-between gap-5">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button type="submit" class="py-2 px-5 bg-blue-600 text-white rounded-md self-end">comment</button>
+                </form>
+                <div class="flex flex-col">
+                    {% for comment in comments %}
+                    <div class="py-2">
+                        <strong>{{comment.user.username}}</strong>
+                        <p>{{comment.commentDescription}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="md:w-1/5">
+                {% if author_data %}
+                    <h2 class="text-2xl mb-5">About Author</h2>
+                    <div class="flex items-center gap-4">
+                        <img src="{{author_profile.pfp.url}}" alt="{{author_data.username}} pfp" class="w-[40px] h-[40px] rounded-full"/>
+                        <h3 class="text-xl">{{author_data.username}}</h3>
+                    </div>
+                    <p>{{author_profile.bio}}</p>
+                    {% if isUserAuthor %}
+                    {% else %}
+                    <button>follow</button>
+                    {% endif %}
+                {% endif %}
+                <hr>
                 {% if isUserAuthor %}
                     <div>
-                        <h2 class="text-3xl">Manage Article Post</h2>
+                        <h2 class="text-xl">Manage Article Post</h2>
                         <div class="bg-red-50 p-4 flex flex-col items-stretch mt-2">
                             <div class="w-full flex items-center justify-between border-b-2 py-2">
                                 <p>Archive Article Post</p>
@@ -35,16 +73,6 @@
                         </div>
                     </div>
                 {% else %}
-                {% endif %}
-            </div>
-            <div class="md:w-1/5">
-                {% if author_data %}
-                    <h2>About Author</h2>
-                    <h3>{{author_data.username}}</h3>
-                    {% if isUserAuthor %}
-                    {% else %}
-                    <button>follow</button>
-                    {% endif %}
                 {% endif %}
             </div>
         </div>

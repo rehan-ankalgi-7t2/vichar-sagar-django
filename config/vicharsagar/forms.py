@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, Article
+from .models import Profile, Article, Comment
 
 class ProfileForm(forms.ModelForm):
     class Meta:
@@ -21,4 +21,12 @@ class ArticleForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'class': 'w-[100%] block rounded-md', 'rows': 5, 'cols': 100, 'placeholder': 'Write your bio here...'}),
             'topics': forms.CheckboxSelectMultiple(attrs={'class': 'border-2 focus:border-4 focus:border-blue-500 rounded-md'}),
             'articleImage': forms.ClearableFileInput(attrs={'class': 'block'})
+        }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['commentDescription']
+        widgets={
+            'commentDescription': forms.TextInput(attrs={'class': 'border-2 focus:border-4 focus:border-blue-500 rounded-md block w-full'})
         }
