@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect, get_list_or_404
 import re
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
-from .models import Article, Topic, Profile, Comment
+from .models import Article, Topic, Profile, Comment, List
 from .forms import ProfileForm, ArticleForm, CommentForm, CreateListForm
 
 # Create your views here.
@@ -129,12 +129,14 @@ def profile_view(request):
         # the user is logged in
         existing_profile = get_object_or_404(Profile, user=request.user.id)
         authored_articles = Article.objects.filter(author = request.user)
+        user_lists = List.objects.filter(user = request.user)
 
         if existing_profile:
             context = {
                 "user_data": request.user,
                 "profile_data": existing_profile,
-                "user_articles": authored_articles 
+                "user_articles": authored_articles,
+                "user_lists": user_lists
             }
         else:
             context = {
@@ -252,3 +254,24 @@ def create_list_view(request):
         form = CreateListForm()
 
     return render(request, "vicharsagar/create_list.html", {'form': form})
+
+def list_detail_view(request, list_id):
+    isOwner = False
+    current_list = get_object_or_404(List, pk=list_id)
+    list_owner = get_object_or_404(User, pk=current_list.user.id)
+    list_owner_profile = get_object_or_404(Profile, user=current_list.user.id)
+    list_articles = current_list.articles.all()
+    # list_articles = get_list_or_404(Article, id in current_list.art)
+    
+    if request.user == list_owner:
+        isOwner = True
+
+    context = {
+        "list_data": current_list,
+        "list_articles": list_articles or [],
+        "list_owner": list_owner,
+        "list_owner_profile": list_owner_profile,
+        "isOwner": isOwner
+    }
+
+    return render(request, "vicharsagar/list_detail.html", context)

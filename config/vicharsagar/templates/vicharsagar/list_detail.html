@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block title %}list details - Vichar Sagar{% endblock title %}
+{% block content %}
+    <div class="container mx-auto px-4 py-5 min-h-screen shadow-md my-5">
+        <div class="flex flex-col md:flex-row gap-4">
+            <div class="md:w-4/5 border-r-2 pr-4">
+                <h1 class="text-4xl">{{list_data.listDescription}}</h1>
+                {% if list_articles %}
+                    {% for article_data in list_articles %}
+                        <article>
+                            <h1 class="text-5xl">{{article_data.articleTitle}}</h1>
+                            <br>
+                            {% if article_data.articleImage %}
+                                <img src={{article_data.articleImage.url}} alt={{article_data.articleTitle}} class="w-full bg-contain bg-center rounded-md">
+                            {% endif %}
+                            <br>
+                            <p>{{article_data.content}}</p>
+                        </article>
+                    {% endfor %}
+
+                    {% else %}
+                        {% comment %} TODO: add 404 empty  state UI {% endcomment %}
+                {% endif %}
+                <br>
+                <hr>
+            </div>
+            <div class="md:w-1/5">
+                {% if list_owner %}
+                    <h2 class="text-2xl mb-5">List Owner</h2>
+                    <div class="flex items-center gap-4">
+                        <img  src="{{list_owner_profile.pfp.url}}" alt="{{list_owner.username}} pfp" class="w-[40px] h-[40px] rounded-full object-cover"/>
+                        <h3 class="text-xl">{{list_owner.username}}</h3>
+                    </div>
+                    <p>{{list_owner_profile.bio}}</p>
+                    {% if isOwner %}
+                    {% else %}
+                    <button>follow</button>
+                    {% endif %}
+                {% endif %}
+                <hr>
+                {% if isOwner %}
+                    <div>
+                        <h2 class="text-xl">Manage List</h2>
+                        <div class="bg-red-50 p-4 flex flex-col items-stretch mt-2">
+                            <div class="w-full flex items-center justify-between border-b-2 py-2">
+                                <p>Archive List</p>
+                                <button class="py-2 px-3 bg-gray-600 shadow-md rounded-md font-semibold text-white">Archive 🗃️</button>
+                            </div>
+                            <div class="w-full flex items-center justify-between border-b-2 py-2">
+                                <p>Delete List</p>
+                                <a href="/vicharsagar/list/delete/{{list.id}}">
+                                    <button class="py-2 px-3 bg-red-600 shadow-md rounded-md font-semibold text-white">Delete 🗑️</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                {% endif %}
+            </div>
+        </div>
+        
+    </div>
+{% endblock content %}

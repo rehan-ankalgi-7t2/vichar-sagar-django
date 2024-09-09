@@ -34,7 +34,7 @@ class Comment(models.Model):
 
 class List(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
-    articles = models.ManyToManyField(Article, related_name='articles_included', blank=True)  # Many-to-Many relation with articles
+    articles = models.ManyToManyField(Article, blank=True)  # Many-to-Many relation with articles
     listDescription = models.CharField(max_length=255)
     private = models.BooleanField(default=False)  # Allow creating private lists
 
