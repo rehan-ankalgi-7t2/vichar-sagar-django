@@ -7,14 +7,24 @@
                 {% if user.is_authenticated %}
                 <div class="w-full flex items-center justify-between py-3">
                     <h1 class="text-5xl">Hello {{user.username}}</h1>
-                    <button class="py-2 px-5 bg-blue-500 text-white rounded-md shadow-md"><a href="/vicharsagar/profile/edit">Edit Profile <i class="bi bi-pencil"></i> </a></button>
+                    
                 </div>
                 {% else %}
                     <span class="p-4 rounded-md bg-red-100 text-red-700">❌ {{message}}</span>
                 {% endif %}
                 <hr>
                 {% if user_articles %}
-                <h2 class="text-2xl pt-3">Your Articles</h2>
+
+                {% comment %} Tabs Section {% endcomment %}
+                <!-- Tab navigation buttons -->
+                <div class="tab">
+                    <button class="tablinks tab-button" onclick="openTab(event, 'Tab1')">Your Articles</button>
+                    <button class="tablinks tab-button" onclick="openTab(event, 'Tab2')">Reading lists</button>
+                </div>
+
+                <!-- Tab content (use Jinja to populate these) -->
+                <div id="Tab1" class="tabcontent active">
+                    <h2 class="text-2xl pt-3">Your Articles</h2>
                     {% for article in user_articles %}
                             <div class="flex w-full justify-between items-center p-5 border-b-2" id="article-card">
                                 <div>
@@ -46,18 +56,54 @@
                         <p>write your first article and join the tortured poet's department</p>
                         <button class="py-2 px-5 bg-blue-600 text-white rounded-md">Write an article</button>
                 {% endif %}
+                </div>
+                <div id="Tab2" class="tabcontent">
+                    <h3>Tab 2</h3>
+                    <p>{% block tab2_content %} Content for Tab 2 {% endblock %}</p>
+                </div>
+
+                
             </div>
-            <div class="md:w-1/4">
+            <div class="md:w-1/4 flex flex-col items-start gap-4">
                 {% if profile_data.pfp %}
                 <img src="{{profile_data.pfp.url}}" alt="pfp" class="w-[100px] h-[100px] object-cover"/>
                 {% else %}
                 <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-full w-[100px] h-[100px]"></div>
                 {% endif %}
-                <h3>{{user.username}}</h3>
-                <span>followers</span>
-                <span>following</span>
-    
+                <h3 class="text-xl">{{user.username}}</h3>
+                <p>{{profile_data.bio}}</p>
+                <span>followers: {{profile_data.followers}}</span>
+                <span>following:{{profile_data.following}}</span>
+                <button class="py-2 px-5 bg-blue-500 text-white rounded-md shadow-md"><a href="/vicharsagar/profile/edit">Edit Profile <i class="bi bi-pencil"></i> </a></button>
+
+                <hr>
+
+                <h3 class="text-xl">Your Lists</h3>
+                <div class="flex w-full items-center justify-between">Create new List <a href="/vicharsagar/list/create"><button><i class="bi bi-plus-circle text-2xl"></i></button></a></div>
             </div>
         </div>
     </div>
+
+    <!-- JavaScript to toggle between tabs -->
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+    
+            // Hide all tab content
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+    
+            // Remove active class from all tabs
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+    
+            // Show the clicked tab and add active class to the clicked button
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
 {% endblock content %}

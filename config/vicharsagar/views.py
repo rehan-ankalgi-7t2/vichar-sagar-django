@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from .models import Article, Topic, Profile, Comment
-from .forms import ProfileForm, ArticleForm, CommentForm
+from .forms import ProfileForm, ArticleForm, CommentForm, CreateListForm
 
 # Create your views here.
 def home_view(request):
@@ -237,3 +237,18 @@ def delete_article(request, article_id):
     curr_article = Article.objects.get(id=article_id)
     curr_article.delete()
     return redirect('home')
+
+def create_list_view(request):
+    if request.method == 'POST':
+        form = CreateListForm(request.POST)
+
+        if form.is_valid():
+            new_list = form.save(commit=False)
+            new_list.user = request.user
+            new_list.save()
+            messages.success(request, 'Your list  was successfully created!')
+            return redirect('home')
+    else:
+        form = CreateListForm()
+
+    return render(request, "vicharsagar/create_list.html", {'form': form})

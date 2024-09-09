@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    /* Style for tabs */
+        .tab {
+            @apply overflow-hidden border-b-2
+        }
+    
+        /* Tab buttons */
+        .tab-button {
+            @apply bg-gray-50 cursor-pointer px-4 py-2 text-blue-600;
+        }
+    
+        /* Active/current tab */
+        .tab-button.active {
+            @apply border-r-0 border-t-0 border-l-0 border-b-4 border-blue-600;
+        }
+    
+        /* Tab content */
+        .tabcontent {
+            @apply hidden p-3;
+        }
+    
+        .tabcontent.active {
+            @apply block;
+        }
+}

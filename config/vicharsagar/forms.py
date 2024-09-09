@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, Article, Comment
+from .models import Profile, Article, Comment, List
 
 class ProfileForm(forms.ModelForm):
     class Meta:
@@ -29,4 +29,13 @@ class CommentForm(forms.ModelForm):
         fields = ['commentDescription']
         widgets={
             'commentDescription': forms.TextInput(attrs={'class': 'border-2 focus:border-4 focus:border-blue-500 rounded-md block w-full'})
+        }
+
+
+class CreateListForm(forms.ModelForm):
+    class Meta:
+        model = List
+        fields = ['listDescription', 'private']
+        widgets = {
+            'listDescription': forms.TextInput(attrs={'class': 'border-2 focus:border-4 focus:border-blue-500 rounded-md block w-full'}),
         }
