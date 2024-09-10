@@ -70,14 +70,18 @@
                 {% else %}
                 <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-full w-[100px] h-[100px]"></div>
                 {% endif %}
-                <h3 class="text-xl">{{user.username}}</h3>
+                <div class="flex items-center justify-between w-full">
+                    <h3 class="text-xl">{{user.username}}</h3>
+                    <button class="py-2 px-4 bg-blue-500 text-white rounded-md shadow-md"><a href="/vicharsagar/profile/edit" class="flex items-center gap-2">edit profile <i class="bi bi-pencil text-2xl"></i> </a></button>
+                </div>
                 <p>{{profile_data.bio}}</p>
                 <span>followers: {{profile_data.followers}}</span>
                 <span>following:{{profile_data.following}}</span>
-                <button class="py-2 px-5 bg-blue-500 text-white rounded-md shadow-md"><a href="/vicharsagar/profile/edit">Edit Profile <i class="bi bi-pencil"></i> </a></button>
                 <hr>
-                <h3 class="text-xl">Your Lists</h3>
-                <div class="flex w-full items-center justify-between">Create new List <a href="/vicharsagar/list/create"><button><i class="bi bi-plus-circle text-2xl"></i></button></a></div>
+                <div class="flex items-center justify-between w-full">
+                    <h3 class="text-xl">Your Lists</h3>
+                    <a href="/vicharsagar/list/create"><button class="bg-blue-500 text-white py-2 px-4 rounded-md flex items-center gap-2 shadow-md">create list<i class="bi bi-plus-circle text-2xl"></i></button></a>
+                </div>
                 <div class="flex flex-col items-start gap-3">
                     {% for list in user_lists %}
                         <a href="/vicharsagar/list/{{list.id}}">{{list.listDescription}}</a>

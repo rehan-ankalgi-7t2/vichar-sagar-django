@@ -296,4 +296,12 @@ def toggle_like_article(request, article_id):
 
 @login_required
 def toggle_article_in_list(request, list_id, article_id):
+    current_list = get_object_or_404(List, pk=list_id)
+    current_article = get_object_or_404(Article, pk=article_id)
+
+    if current_article in current_list.articles.all():
+        current_list.articles.remove(current_article)
+    else:
+        current_list.articles.add(current_article)
+
     return redirect('view-article', article_id=article_id)
