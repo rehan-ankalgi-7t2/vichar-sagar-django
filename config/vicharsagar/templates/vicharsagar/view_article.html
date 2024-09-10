@@ -6,7 +6,34 @@
             <div class="md:w-4/5 border-r-2 pr-4">
                 {% if article_data %}
                     <article>
-                        <h1 class="text-5xl">{{article_data.articleTitle}}</h1>
+                        <div class="flex items-center justify-between">
+                            <h1 class="text-5xl">{{article_data.articleTitle}}</h1>
+                            <div class="flex items-center gap-2">
+                                <a href="/vicharsagar/article/like/{{article_data.id}}" class="bg-red-50 p-3 rounded-full aspect-1 text-red-600">
+                                    <button class="aspect-1">
+                                        {% if isLiked %}
+                                            <i class="bi bi-heart-fill"> </i>
+                                        {% else %}
+                                            <i class="bi bi-heart"></i>
+                                        {% endif %}
+                                    </button>
+                                </a>
+                                <a href="/vicharsagar/article/like/{{article_data.id}}" class="bg-yellow-50 p-3 rounded-full aspect-1 text-yellow-600">
+                                    <button class="aspect-1">
+                                        {% if isLiked %}
+                                            <i class="bi bi-bookmark-fill"></i>
+                                        {% else %}
+                                            <i class="bi bi-bookmark"></i>
+                                        {% endif %}
+                                    </button>
+                                </a>
+                                <a href="/vicharsagar/article/like/{{article_data.id}}" class="bg-blue-50 p-3 rounded-full aspect-1 text-blue-500">
+                                    <button class="aspect-1">
+                                        <i class="bi bi-share-fill"></i>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
                         <br>
                         {% if article_data.articleImage %}
                             <img src={{article_data.articleImage.url}} alt={{article_data.articleTitle}} class="w-full bg-contain bg-center rounded-md">
@@ -57,17 +84,21 @@
                 {% endif %}
                 <hr>
                 {% if isUserAuthor %}
-                    <div>
+                    <div class="py-5">
                         <h2 class="text-xl">Manage Article Post</h2>
-                        <div class="bg-red-50 p-4 flex flex-col items-stretch mt-2">
+                        <div class="p-4 flex flex-col items-stretch mt-2">
+                            <div class="w-full flex items-center justify-between border-b-2 py-2">
+                                <p>Edit Article</p>
+                                <button class="py-2 px-3 bg-blue-600 shadow-md rounded-md font-semibold text-white">Edit <i class="bi bi-pencil"></i></button>
+                            </div>
                             <div class="w-full flex items-center justify-between border-b-2 py-2">
                                 <p>Archive Article Post</p>
-                                <button class="py-2 px-3 bg-gray-600 shadow-md rounded-md font-semibold text-white">Archive 🗃️</button>
+                                <button class="py-2 px-3 bg-gray-600 shadow-md rounded-md font-semibold text-white">Archive <i class="bi bi-archive"></i></button>
                             </div>
                             <div class="w-full flex items-center justify-between border-b-2 py-2">
                                 <p>Delete Post</p>
                                 <a href="/vicharsagar/article/delete/{{article_data.id}}">
-                                    <button class="py-2 px-3 bg-red-600 shadow-md rounded-md font-semibold text-white">Delete 🗑️</button>
+                                    <button class="py-2 px-3 bg-red-600 shadow-md rounded-md font-semibold text-white">Delete <i class="bi bi-trash"></i></button>
                                 </a>
                             </div>
                         </div>

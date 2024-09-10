@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from .models import Article, Topic, Profile, Comment, List
 from .forms import ProfileForm, ArticleForm, CommentForm, CreateListForm
 
@@ -199,10 +200,14 @@ def create_article_view(request):
 
 def article_details_view(request, article_id):
     isUserAuthor = False
+    isLiked = False
     curr_article = get_object_or_404(Article, pk=article_id)
     article_author = get_object_or_404(User, pk=curr_article.author.id)
     author_profile = get_object_or_404(Profile, user=article_author.id)
     article_comments = Comment.objects.filter(article = article_id)
+
+    if(request.user in curr_article.likes.all()):
+        isLiked = True
     
     if request.user == article_author:
         isUserAuthor = True
@@ -229,6 +234,7 @@ def article_details_view(request, article_id):
         "author_profile": author_profile,
         "comments": article_comments or [],
         "isUserAuthor": isUserAuthor,
+        "isLiked": isLiked,
         "comments_count": len(article_comments),
         "form": form
     }
@@ -275,3 +281,19 @@ def list_detail_view(request, list_id):
     }
 
     return render(request, "vicharsagar/list_detail.html", context)
+
+@login_required
+def toggle_like_article(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    user = request.user
+
+    if user in article.likes.all():
+        article.likes.remove(user)  # Unlike the article
+    else:
+        article.likes.add(user)  # Like the article
+
+    return redirect('view-article', article_id=article.id)
+
+@login_required
+def toggle_article_in_list(request, list_id, article_id):
+    return redirect('view-article', article_id=article_id)
