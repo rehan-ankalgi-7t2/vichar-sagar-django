@@ -5,7 +5,24 @@
         <div class="flex flex-col md:flex-row gap-4">
             <div class="md:w-3/4 border-r-2 overflow-y-scroll">
                 <main class="">
-                    <div class="flex-col flex gap-5">
+
+                    {% comment %} Topics Slider {% endcomment %}
+                    <div class="flex overflow-x-scroll overflow-y-hidden items-center gap-2 py-2 my-5">
+                         {% for topic in topics %}
+                                <span class="bg-gray-100 text-black py-2 px-3 rounded-full text-sm">{{topic.topicName}}</span>
+                            {% endfor %}
+                    </div>
+
+                    {% comment %} Tabs Section {% endcomment %}
+                    <!-- Tab navigation buttons -->
+                    <div class="tab">
+                        <button class="tablinks tab-button" onclick="openTab(event, 'Tab1')">Articles</button>
+                        <button class="tablinks tab-button" onclick="openTab(event, 'Tab2')">Reading lists</button>
+                    </div>
+
+                    <!-- Tab content (use Jinja to populate these) -->
+                    <div id="Tab1" class="tabcontent active">
+                        <div class="flex-col flex gap-5">
                         {% for article in articles %}
                             <div class="flex w-full justify-between items-center p-5 border-b-2" id="article-card">
                                 <div>
@@ -34,6 +51,12 @@
                             </div>
                         {% endfor %}
                     </div>
+                    </div>
+                    <div id="Tab2" class="tabcontent">
+                        <h3>Tab 2</h3>
+                        <p>{% block tab2_content %} Content for Tab 2 {% endblock %}</p>
+                    </div>
+                    
                 </main>
             </div>
             <div class="md:w-1/4">
@@ -53,19 +76,15 @@
                         <h3 class="text-xl pb-3">Topics to follow</h3>
                         <div class="flex flex-wrap gap-2">
                             {% for topic in topics %}
-                                <span class="bg-gray-300 text-black py-2 px-3 rounded-full text-sm">{{topic.topicName}}</span>
+                                <span class="bg-gray-100 text-black py-2 px-3 rounded-full text-sm">{{topic.topicName}}</span>
                             {% endfor %}
-                            <span class="bg-gray-300 text-black py-2 px-3 rounded-full text-sm">Culture</span>
-                            <span class="bg-gray-300 text-black py-2 px-3 rounded-full text-sm">Geo Politics</span>
-                            <span class="bg-gray-300 text-black py-2 px-3 rounded-full text-sm">Finance</span>
-                            <span class="bg-gray-300 text-black py-2 px-3 rounded-full text-sm">Trends</span>
                         </div>
                     </div>
                     <hr>
                     <div class="py-5">
                         <h3 class="text-xl">Writers to Follow</h3>
                         {% for user in users %}
-                            <div class="w-full flex items-center justify-between mt-2">
+                            <div class="w-full flex items-center justify-between mt-5">
                                 <p class="font-semibold">{{user}}</p>
                                 <button class="py-1 px-3 border-2 rounded-full shadow-sm">follow</button>
                             </div>
@@ -75,4 +94,27 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript to toggle between tabs -->
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+    
+            // Hide all tab content
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+    
+            // Remove active class from all tabs
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+    
+            // Show the clicked tab and add active class to the clicked button
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
 {% endblock content %}
