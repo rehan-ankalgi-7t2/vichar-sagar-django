@@ -39,7 +39,9 @@
                             <img src={{article_data.articleImage.url}} alt={{article_data.articleTitle}} class="w-full bg-contain bg-center rounded-md">
                         {% endif %}
                         <br>
-                        <p>{{article_data.content}}</p>
+                        <div>
+                            {{article_data.content | safe}}
+                        </div>
                     </article>
                 {% endif %}
                 <br>
@@ -89,7 +91,9 @@
                         <div class="p-4 flex flex-col items-stretch mt-2">
                             <div class="w-full flex items-center justify-between border-b-2 py-2">
                                 <p>Edit Article</p>
-                                <button class="py-2 px-3 bg-blue-600 shadow-md rounded-md font-semibold text-white">Edit <i class="bi bi-pencil"></i></button>
+                                <a href="/vicharsagar/article/edit/{{article_data.id}}">
+                                    <button class="py-2 px-3 bg-blue-600 shadow-md rounded-md font-semibold text-white">Edit <i class="bi bi-pencil"></i></button>
+                                </a>
                             </div>
                             <div class="w-full flex items-center justify-between border-b-2 py-2">
                                 <p>Archive Article Post</p>

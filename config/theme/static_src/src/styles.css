@@ -24,6 +24,11 @@
     border: 2px solid #0059ff;
 }
 
+form input[type='text'] {
+    box-sizing: content-box;
+    width: 100%;
+}
+
 @tailwind components;
 @tailwind utilities;
 

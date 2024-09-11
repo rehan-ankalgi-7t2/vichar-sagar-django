@@ -1,5 +1,6 @@
 from django import forms
 from .models import Profile, Article, Comment, List
+# from ckeditor.fields import RichTextFormField
 
 class ProfileForm(forms.ModelForm):
     class Meta:
@@ -17,8 +18,10 @@ class ArticleForm(forms.ModelForm):
         model = Article
         fields = ['articleTitle', 'content', 'topics', 'articleImage']
         widgets={
-            'articleTitle': forms.TextInput(attrs={'class': 'border-2 focus:border-4 focus:border-blue-500 rounded-md block w-[100%]'}),
-            'content': forms.Textarea(attrs={'class': 'w-[100%] block rounded-md', 'rows': 5, 'cols': 100, 'placeholder': 'Write your bio here...'}),
+            'articleTitle': forms.TextInput(attrs={
+                    'class': 'border-2 focus:border-4 focus:border-blue-500 rounded-md block w-96',
+                    'placeholder':'article title'
+                }),
             'topics': forms.CheckboxSelectMultiple(attrs={'class': 'border-2 focus:border-4 focus:border-blue-500 rounded-md'}),
             'articleImage': forms.ClearableFileInput(attrs={'class': 'block'})
         }

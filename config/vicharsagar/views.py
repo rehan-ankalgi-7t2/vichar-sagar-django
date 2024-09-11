@@ -13,12 +13,16 @@ def home_view(request):
     all_articles = Article.objects.all()
     topics = Topic.objects.all()[:10]
     all_users = User.objects.all()[:10]
+    all_lists = List.objects.filter(private = False)[:10]
 
     context = {
         "articles": all_articles,
         "topics": topics,
-        "users": all_users
+        "users": all_users,
+        "lists": all_lists
     }
+
+    print(all_lists)
     return render(request, "vicharsagar/home.html", context)
 
 def profile_view(request):
@@ -195,6 +199,23 @@ def create_article_view(request):
             return redirect('home')
     else:
         form = ArticleForm()
+
+    return render(request, "vicharsagar/create_article.html", {'form': form})
+
+def edit_article_view(request, article_id):
+    current_article = get_object_or_404(Article, pk=article_id)
+
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, request.FILES, instance=current_article)
+
+        if form.is_valid():
+            new_article = form.save(commit=False)
+            new_article.author = request.user
+            new_article.save()
+            messages.success(request, 'Your article  was successfully edited!')
+            return redirect('home')
+    else:
+        form = ArticleForm(instance=current_article)
 
     return render(request, "vicharsagar/create_article.html", {'form': form})
 

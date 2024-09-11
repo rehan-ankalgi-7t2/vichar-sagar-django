@@ -31,6 +31,7 @@ urlpatterns = [
     path("article/<int:article_id>", views.article_details_view, name="view-article"),
     path("article/delete/<int:article_id>", views.delete_article, name="delete-article"),
     path("article/like/<int:article_id>", views.toggle_like_article, name="toggle-like-article"),
+    path("article/edit/<int:article_id>", views.edit_article_view, name="edit-article"),
     path("list/create", views.create_list_view, name="create-list"),
     path("list/<int:list_id>", views.list_detail_view, name="list-detail"),
     path("article/<int:article_id>/list/<int:list_id>", views.toggle_article_in_list, name="toggle-article-in-list"),

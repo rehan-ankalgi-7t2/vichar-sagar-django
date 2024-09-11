@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'vicharsagar',
     'tailwind',
-    'theme'
+    'theme',
+    'ckeditor'
 ]
 
 TAILWIND_APP_NAME = 'theme'
