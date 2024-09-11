@@ -34,8 +34,8 @@ class Comment(models.Model):
         return f"Comment by {self.user.username} on Article: {self.articles.first().articleTitle}"  # Truncated for brevity
 
 class List(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
-    articles = models.ManyToManyField(Article, blank=True)  # Many-to-Many relation with articles
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1, related_name="related_user")
+    articles = models.ManyToManyField(Article, blank=True, related_name="list_articles")  # Many-to-Many relation with articles
     listDescription = models.CharField(max_length=255)
     private = models.BooleanField(default=False)  # Allow creating private lists
 

@@ -10,10 +10,11 @@ from .forms import ProfileForm, ArticleForm, CommentForm, CreateListForm
 
 # Create your views here.
 def home_view(request):
-    all_articles = Article.objects.all()
+    all_articles = Article.objects.all().select_related('author__profile')
     topics = Topic.objects.all()[:10]
-    all_users = User.objects.all()[:10]
-    all_lists = List.objects.filter(private = False)[:10]
+    all_users = User.objects.all()[:10].select_related('profile')
+    # all_lists = List.objects.filter(private = False)[:10].select_related('user__profile').prefetch_related('articles')
+    all_lists = List.objects.filter()[:10].select_related('user__profile').prefetch_related('articles')
 
     context = {
         "articles": all_articles,
@@ -302,6 +303,15 @@ def list_detail_view(request, list_id):
     }
 
     return render(request, "vicharsagar/list_detail.html", context)
+
+def lists_view(request):
+    all_lists = List.objects.all(user=request.user)[:10]
+
+    context = {
+        'lists': all_lists
+    }
+
+    return render(request, "vicharsagar/lists.html", context)
 
 @login_required
 def toggle_like_article(request, article_id):

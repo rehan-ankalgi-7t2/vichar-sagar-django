@@ -25,16 +25,23 @@
                         {% if articles %}
                         <div class="flex-col flex gap-5">
                             {% for article in articles %}
-                                <div class="flex w-full justify-between items-center p-5 border-b-2" id="article-card">
+                                <div class="flex w-full justify-between items-center p-5 border-b-2 hover:bg-gray-50" id="article-card">
                                     <div>
-                                        <span>{{article.author}}</span>
+                                        <div class="flex items-center gap-3 mb-2">
+                                            {% if article.author.profile.pfp.url %}
+                                                <img class="w-8 aspect-1 rounded-full" src="{{article.author.profile.pfp.url}}" alt="{{article.author}}">
+                                                {% else %}
+                                                <span class="w-8 aspect-1 rounded-full bg-gradient-to-b from-gray-50 to-gray-900"></span>
+                                            {% endif %}
+                                            <span>{{article.author}}</span>
+                                        </div>
                                         <a href="/vicharsagar/article/{{article.id}}">
                                             <h3 class="text-3xl mb-2">{{article.articleTitle}}</h3>
                                         </a> 
                                         {% comment %} <p class="text-ellipsis overflow-hidden h-7 w-[90%]">{{article.content}}</p> {% endcomment %}
                                         <div class="flex flex-wrap gap-2 my-2">
                                             {% for at_topic in article.topics.all %}
-                                                <span class="bg-gray-300 text-black py-2 px-3 rounded-full text-sm">{{at_topic.topicName}}</span>
+                                                <span class="bg-gray-100 text-black py-2 px-3 rounded-full text-sm">{{at_topic.topicName}}</span>
                                             {% endfor %}
                                         </div>
                                         <div class="flex w-full items-center gap-5">
@@ -65,7 +72,20 @@
                     <div id="Tab2" class="tabcontent">
                         {% if lists %}
                             {% for list in lists %}
-                                <a href="/vicharsagar/list/{{list.id}}">{{list.listDescription}}</a>
+                                <div class="py-3 border border-b-2 border-0 px-2 flex items-end justify-between hover:bg-gray-50">
+                                    <div>
+                                        <div class="flex items-center gap-2 mb-2">
+                                            {% if user.profile.pfp.url %}
+                                                <img class="w-8 aspect-1 rounded-full" src="{{list.user.profile.pfp.url}}" alt="{{list.listDescription}}">
+                                                {% else %}
+                                                <span class="w-8 aspect-1 rounded-full bg-gradient-to-b from-gray-50 to-gray-900"></span>
+                                            {% endif %}
+                                            <p>{{list.user}}</p>
+                                        </div>
+                                        <h3 class="text-3xl"><a href="/vicharsagar/list/{{list.id}}">{{list.listDescription}}</a></h3>
+                                    </div>
+                                    <i class="bi bi-arrow-up-right font-3xl"></i>
+                                </div>
                             {% endfor %}
                             {% else %}
                             <div class="w-full flex flex-col items-center justify-center gap-2 py-4">
@@ -83,10 +103,17 @@
             <div class="md:w-1/4">
                 <aside>
                     <div>
-                        <h3 class="text-xl">Staff picked articles</h3>
+                        <h3 class="text-xl mb-4">Staff picked articles</h3>
                         {% for article in articles %}
                             <div class="mb-3">
-                                <span>{{article.author}}</span>
+                                <div class="flex items-center gap-3 mb-2">
+                                    {% if article.author.profile.pfp.url %}
+                                        <img class="w-8 aspect-1 rounded-full" src="{{article.author.profile.pfp.url}}" alt="{{article.author}}">
+                                        {% else %}
+                                        <span class="w-8 aspect-1 rounded-full bg-gradient-to-b from-gray-50 to-gray-900"></span>
+                                    {% endif %}
+                                    <span>{{article.author}}</span>
+                                </div>
                                 <h4 class="text-md font-semibold">{{article.articleTitle}}</h4>
                             </div>
                         {% endfor %}
@@ -106,7 +133,14 @@
                         <h3 class="text-xl">Writers to Follow</h3>
                         {% for user in users %}
                             <div class="w-full flex items-center justify-between mt-5">
-                                <p class="font-semibold">{{user}}</p>
+                                <div class="flex items-center gap-2">
+                                    {% if user.profile.pfp.url %}
+                                        <img class="w-8 aspect-1 rounded-full" src="{{user.profile.pfp.url}}" alt="{{user}}">
+                                        {% else %}
+                                        <span class="w-8 aspect-1 rounded-full bg-gradient-to-b from-gray-50 to-gray-900"></span>
+                                    {% endif %}
+                                    <p class="font-semibold">{{user}}</p>
+                                </div>
                                 <button class="py-1 px-3 border-2 rounded-full shadow-sm">follow</button>
                             </div>
                         {% endfor %}

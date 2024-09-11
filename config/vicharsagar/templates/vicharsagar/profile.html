@@ -24,7 +24,6 @@
 
                 <!-- Tab content (use Jinja to populate these) -->
                 <div id="Tab1" class="tabcontent active">
-                    <h2 class="text-2xl pt-3">Your Articles</h2>
                     {% for article in user_articles %}
                             <div class="flex w-full justify-between items-center p-5 border-b-2" id="article-card">
                                 <div>
@@ -58,8 +57,11 @@
                 {% endif %}
                 </div>
                 <div id="Tab2" class="tabcontent">
-                    <h3>Tab 2</h3>
-                    <p>{% block tab2_content %} Content for Tab 2 {% endblock %}</p>
+                    <div class="flex flex-col items-start gap-3">
+                    {% for list in user_lists %}
+                        <a href="/vicharsagar/list/{{list.id}}">{{list.listDescription}}</a>
+                    {% endfor %}
+                </div>
                 </div>
 
                 
